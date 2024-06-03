@@ -10,7 +10,7 @@ export const Input: FC<InputProps> = ({ id, placeholder, type, className, ...pro
       id={id}
       placeholder={placeholder}
       type={type}
-      className={`bg-white border border-gray-300 rounded-lg p-2 w-full text-black ${className}`}
+      className={`border border-gray-300 rounded-lg p-2 w-full text-gray-700 ${className}`}
       {...props}
     />
   );
