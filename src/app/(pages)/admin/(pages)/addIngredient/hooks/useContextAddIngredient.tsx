@@ -1,19 +1,21 @@
 "use client";
 
 import { useContext } from "react";
-import { AddIngredientContext } from "../context/addIngredientContextProvider";
+import { DatabaseContext } from "@/app/context/databaseContext";
 
 export const useAddIngredient = () => {
-  const context = useContext(AddIngredientContext);
+  const databaseContext = useContext(DatabaseContext);
 
-  if (!context) {
+  if (!databaseContext) {
     throw new Error("useAddIngredient must be used within an AddIngredientContextProvider");
   }
 
-  const { addIngredient, uploadImage } = context
+  const { ingredients, setIngredients, products, setProducts } = databaseContext
 
     return { 
-        addIngredient, 
-        uploadImage, 
-    };
+      ingredients,
+      setIngredients, 
+      products,
+      setProducts,
+    }
 };

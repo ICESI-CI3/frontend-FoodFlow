@@ -28,9 +28,9 @@ export function RegisterForm() {
         <div>
           <Select id="role" className="bg-white border border-gray-300 rounded-lg p-2 w-full text-black" required>
             <option value="" disabled selected>Selecciona un rol</option>
-            <option value="waiter">Mesero</option>
+            <option value="mesero">Mesero</option>
             <option value="chef">Chef</option>
-            <option value="manager">Administrador</option>
+            <option value="administrador">Administrador</option>
           </Select>
         </div>
         <Button type="submit">Registrarse</Button>

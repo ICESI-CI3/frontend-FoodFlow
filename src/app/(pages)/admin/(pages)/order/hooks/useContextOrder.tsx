@@ -1,10 +1,10 @@
 "use client";
 
 import { useContext } from "react";
-import { OrderContext } from "../context/orderContextProvider";
+import { DatabaseContext } from "@/app/context/databaseContext";
 
 export const useOrder = () => {
-  const orderContext = useContext(OrderContext);
+  const orderContext = useContext(DatabaseContext);
 
   if (!orderContext) {
     throw new Error("useOrder must be used within a OrderContextProvider");

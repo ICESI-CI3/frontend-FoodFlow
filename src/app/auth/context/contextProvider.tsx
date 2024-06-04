@@ -30,7 +30,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        const {email} = currentUser
+        const { email } = currentUser
         setUser(email)
       } else {
         setUser(null)
@@ -89,7 +89,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const login = async (user: any) => {
     try {
       const userExists = users.some((i) => i.email != user.email);
-      
+
       if (userExists) {
         const { email, password } = user;
         const credentials = await signInWithEmailAndPassword(auth, email, password);
@@ -107,7 +107,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
           if (userEmail?.role == "administrador") {
             router.push("/admin/order")
           } else if (userEmail?.role == "mesero") {
-            router.push("/waiterMenu")
+            router.push("/waiter/menu")
           } else if (userEmail?.role == "chef") {
             router.push("/chefOrder")
           }
@@ -124,7 +124,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       Swal.fire({
         title: "Error",
         text: "No se pudo iniciar sesión",
-        icon: "error",        
+        icon: "error",
         timer: 3000,
       })
     }
@@ -132,15 +132,16 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
   const logout = async () => {
     try {
-        await signOut(auth)
-        Swal.fire({
-          title: "Éxito",
-          text: "Sesión cerrada correctamente",
-          icon: "success",
-          timer: 3000,
-        })
-        router.push("/login")
+      router.push("/login")
+      await signOut(auth)
+      Swal.fire({
+        title: "Éxito",
+        text: "Sesión cerrada correctamente",
+        icon: "success",
+        timer: 3000,
+      })
     } catch (error) {
+      console.log(error)
       Swal.fire({
         title: "Error",
         text: "No se pudo cerrar la sesión",

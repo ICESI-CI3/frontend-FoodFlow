@@ -2,98 +2,134 @@
 
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
-import { useAddIngredient } from "./useContextAddIngredient";
 import { Ingredient } from "@/app/interface/ingredient";
 import { v4 as UUID } from "uuid";
 import Swal from "sweetalert2";
+import { addDoc, collection } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage, db } from "../../../../../../../services/firebaseConfig";
+import { useAddIngredient } from "./useContextAddIngredient";
 
 export const useForm = () => {
-  const { addIngredient, uploadImage } = useAddIngredient();
+  const { ingredients } = useAddIngredient();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [imageFile, setImageFile] = useState<File>();
+  const [imageURL, setImageURL] = useState<string>();
+  const [selectedIngredients, setSelectedIngredients] = useState<Ingredient[]>([]);
   const router = useRouter();
-  const [imageURL, setImageURL] = useState<string | null>(null);
 
-  /*const handleImageChange = (e: any) => {
-    const file = e.target.files[0];
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (file) {
-      setImageURL(URL.createObjectURL(file));
-    } else {
-      setImageURL(null);
+      setImageFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageURL(reader.result as string);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
-  const handleImageRemove = () => {
-    setImageURL(null);
-  };*/
+  const handleFileUpload = async (file: any) => {
+    const storageRef = ref(storage, file.name);
+
+    try {
+      await uploadBytes(storageRef, file);
+      const downloadURL = await getDownloadURL(storageRef);
+      setImageURL(downloadURL)
+    } catch (error) {
+      Swal.fire({
+        title: "Error",
+        text: "El archivo no se ha podido guardar",
+        icon: "error",
+        timer: 2000,
+        position: "bottom-end",
+        showConfirmButton: false,
+      })
+    }
+  }
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    Swal.fire({
-      title: "¿Quieres guardar los cambios?",
-      showDenyButton: true,
-      showCancelButton: true,
-      confirmButtonText: "Save",
-      denyButtonText: `Don't save`
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire("Saved!", "", "success");
-      } else if (result.isDenied) {
-        Swal.fire("Changes are not saved", "", "info");
-        return;
-      }
-    });
-
     e.preventDefault();
     const form = e.target as HTMLFormElement;
 
-    const name = (form.elements.namedItem("name") as HTMLInputElement).value;
-    const category = (form.elements.namedItem("category") as HTMLInputElement).value;
-    const unitMeasurement = (form.elements.namedItem("unit") as HTMLInputElement).value;
-    const quantity = new Int32Array([parseInt((form.elements.namedItem("quantity") as HTMLInputElement).value, 10)]);
-    const dangetQuantity = new Int32Array([parseInt((form.elements.namedItem("minQuantity") as HTMLInputElement).value, 10)]);
-    const purchasePrice = new Int32Array([parseInt((form.elements.namedItem("purchasePrice") as HTMLInputElement).value, 10)]);
-    const salePrice = new Int32Array([parseInt((form.elements.namedItem("salePrice") as HTMLInputElement).value, 10)]);
-    const imageFile = (form.elements.namedItem("image") as HTMLInputElement).files?.[0];
+    const name = form.name.value as string;
+    const category = form.category.value as string;
+    const unitMeasurement = form.unit.value as string;
+    const quantity = form.quantity.value as string;
+    const dangetQuantity = form.minQuantity.value as string;
+    const purchasePrice = form.purchasePrice.value as string;
+    const salePrice = form.salePrice.value as string;
+    const status = "activo"
     const id = UUID()
 
-    if (!name) {
+    console.log(imageFile)
+
+    await handleFileUpload(imageFile)
+
+    if (name == null || category == null || unitMeasurement == null || quantity == null || dangetQuantity == null || purchasePrice == null || salePrice == null || imageFile == null) {
       Swal.fire({
         title: "Error",
-        text: "El nombre es requerido",
+        text: "Todos los campos son requeridos",
         icon: "error",
         timer: 3000,
       })
       return;
     }
 
-    let imageUrl = "";
-    if (imageFile) {
-      imageUrl = await uploadImage(imageFile);
+    if (ingredients.some((i) => i.name === name)) {
+      Swal.fire({
+        title: "Error",
+        text: "Ya existe un ingrediente con este nombre",
+        icon: "error",
+        timer: 2000,
+        showConfirmButton: false,
+      })
+      return;
     }
 
     const ingredient: Ingredient = {
-        id, 
-        name,
-        category,
-        unitMeasurement,
-        quantity,
-        dangetQuantity,
-        purchasePrice,
-        salePrice,
-        image: imageUrl,
+      id,
+      name,
+      category,
+      unitMeasurement,
+      quantity,
+      dangetQuantity,
+      purchasePrice,
+      salePrice,
+      status,
+      image: imageFile.name as string,
     };
 
-    const docRef = await addIngredient(ingredient);
-    if (docRef) {
-      setTimeout(() => {
+    try {
+      const docRef = await addDoc(collection(db, "ingredients"), ingredient);
+      Swal.fire({
+        title: "Éxito",
+        text: "Ingrediente creado correctamente",
+        icon: "success",
+        timer: 3000,
+      })
+      if (docRef) {
         router.push("/admin/ingredient");
-      }, 2000);
+      }
+    } catch (error) {
+      Swal.fire({
+        title: "Error",
+        text: "No se ha podido crear el ingrediente",
+        icon: "error",
+        timer: 2000,
+      })
     }
   };
 
+
   return {
-    /*handleImageChange,
-    handleImageRemove,*/
-    handleSubmit,
+    searchTerm,
+    setSearchTerm,
+    handleImageChange,
     imageURL,
-    setImageURL,
+    handleSubmit,
+    selectedIngredients,
+    setSelectedIngredients,
   };
 };

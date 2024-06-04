@@ -1,10 +1,10 @@
 "use client";
 
 import { useContext } from "react";
-import { IngredientContext } from "../context/ingredientContextProvider";
+import { DatabaseContext } from "@/app/context/databaseContext";
 
 export const useIngredient = () => {
-  const ingredientContext = useContext(IngredientContext);
+  const ingredientContext = useContext(DatabaseContext);
 
   if (!ingredientContext) {
     throw new Error("useIngredient must be used within an IngredientContextProvider");

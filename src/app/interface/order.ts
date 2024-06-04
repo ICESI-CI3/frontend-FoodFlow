@@ -1,11 +1,10 @@
 import { Product } from "./product";
 
 export interface Order {
-    image: string;
     name: string;
-    tableNumber: Int32Array;
+    tableNumber: Number;
     orderStatus: string;
-    price: Int32Array;
+    price: Number;
     id: string;
     products: Product[];
 }

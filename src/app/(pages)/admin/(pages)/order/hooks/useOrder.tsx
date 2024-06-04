@@ -1,28 +1,22 @@
 "use client";
 
-import { useOrder } from "./useContextOrder";
+import { useContext } from "react";
+import { DatabaseContext } from "@/app/context/databaseContext";
 
-export const useForm = () => {
-  const { setSortColumn, setSortDirection, setStatusFilter } = useOrder();
+export const useOrders = () => {
+  const databaseContext = useContext(DatabaseContext);
 
-  const handleSort = (column: string) => {
-    setSortColumn((prevColumn: string) => {
-      if (prevColumn === column) {
-        setSortDirection((prevDirection: string) => (prevDirection === "asc" ? "desc" : "asc"));
-      } else {
-        setSortColumn(column);
-        setSortDirection("asc");
-      }
-      return column;
-    });
-  };
+  if (!databaseContext) {
+    throw new Error("useAddProduct must be used within an AddProductContextProvider");
+  }
 
-  const handleStatusFilter = (status: string) => {
-    setStatusFilter(status);
-  };
+  const { ingredients, setIngredients, products, setProducts, orders } = databaseContext
 
-  return {
-    handleSort,
-    handleStatusFilter,
-  };
+    return { 
+      ingredients,
+      setIngredients, 
+      products,
+      setProducts,
+      orders,
+    }
 };

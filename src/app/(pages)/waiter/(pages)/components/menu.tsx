@@ -1,20 +1,19 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import { useForm } from "../hooks/useProduct";
 import { Input } from "@/app/components/input/input";
-import { Button } from "@/app/components/button/button";
+import Link from "next/link";;
+import { useForm } from "../hooks/useOrder";
 
-export const GridView = () => {
-  const { searchTerm, setSearchTerm, filteredProducts, handleButtonMore } = useForm();
+export const MenuView = () => {
+    const { searchTerm, setSearchTerm, filteredProducts } = useForm();
 
   return (
-    <section className="w-full h-5000 py-12">
+    <section className="w-full h-screen">
       <div className="container px-4 md:px-6">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl text-gray-800 font-bold tracking-tight">Productos</h2>
-          <Link href="/admin/addProduct" className="inline-flex h-9 items-center justify-center rounded-md bg-[#F7511E] px-4 py-2 text-sm font-medium text-white-50 shadow transition-colors hover:bg-[#F7511E]/80 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-[#F7511E] dark:text-white-900 dark:hover:bg-[#F7511E]/80 dark:focus-visible:ring-gray-300">
-            Crear productos
+          <Link href="/waiter/createOrder" className="inline-flex h-9 items-center justify-center rounded-md bg-[#F7511E] px-4 py-2 text-sm font-medium text-white-50 shadow transition-colors hover:bg-[#F7511E]/80 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-[#F7511E] dark:text-white-900 dark:hover:bg-[#F7511E]/80 dark:focus-visible:ring-gray-300">
+            Crear Orden
           </Link>
         </div>
         <div className="relative">
@@ -45,11 +44,6 @@ export const GridView = () => {
                   <div className="text-sm font-semibold text-gray-700">Precio: {product.price}</div>
                   <div className="text-sm font-semibold text-gray-700">Categoría: {product.category}</div>
                 </div>
-                <div>
-                  <Button className="bg-[#F7511E] shadow-lg" onClick={handleButtonMore}>
-                    Ver más
-                  </Button>
-                </div>
               </div>
             ))}
           </div>
@@ -57,24 +51,24 @@ export const GridView = () => {
       </div>
     </section>
   );
-};
+}
 
 function SearchIcon(props: any) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="11" cy="11" r="8" />
-      <path d="m21 21-4.3-4.3" />
-    </svg>
-  );
-}
+    return (
+      <svg
+        {...props}
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <circle cx="11" cy="11" r="8" />
+        <path d="m21 21-4.3-4.3" />
+      </svg>
+    );
+  }

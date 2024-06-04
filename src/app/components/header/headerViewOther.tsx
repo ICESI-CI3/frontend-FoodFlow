@@ -6,26 +6,15 @@ import Link from "next/link";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem } from "../dropdownmenu/dropdownmenu";
 import { Button } from "../button/button";
 
-export const Header = () => {
+export const HeaderOther = () => {
   const { handleSubmitLogout } = useForm();
 
   return (
     <header className="bg-gray-100 dark:bg-gray-800 px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
-            <Link href="/admin/order" className="flex items-center gap-2" prefetch={false}>
+            <Link href="#" className="flex items-center gap-2" prefetch={false}>
                 <Package2Icon className="w-6 h-6" />
             </Link>
-            <nav className="flex items-center gap-4">
-              <Link href="/admin/order" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" prefetch={false}>
-                    Órdenes
-              </Link>
-              <Link href="/admin/product" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" prefetch={false}>
-                    Productos
-              </Link>
-              <Link href="/admin/ingredient" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" prefetch={false}>
-                    Ingredientes
-              </Link>
-            </nav>
         </div>
         <DropdownMenu>
             <DropdownMenuTrigger asChild>

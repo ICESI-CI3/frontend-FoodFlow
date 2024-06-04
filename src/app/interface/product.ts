@@ -4,7 +4,7 @@ export interface Product {
     image: string;
     name: string;
     description: string;
-    price: Int32Array;
+    price: string;
     category: string;
     id: string;
     ingredients: Ingredient[];
