@@ -3,6 +3,7 @@
 import React from "react";
 import { useOrders } from "../hooks/useOrder";
 import { Label } from "@/app/components/label/label";
+import Link from "next/link";
 
 export const Orders = () => {
   const { orders } = useOrders()
@@ -24,9 +25,12 @@ export const Orders = () => {
                   <span className="font-semibold text-gray-700">Nombre: {order.name}</span>
                   <span className="text-gray-700">Estado: {order.orderStatus}</span>
                 </div>
-                <div className="flex flex-col flex-grow justify-end pl-4 pr-20 w-1/2">
+                <div className="flex flex-col flex-grow justify-end pl-4 pr-20 w-1/3">
                   <span className="text-gray-700">Número de mesa: {order.tableNumber as unknown as string}</span>
                   <span className="text-gray-700">Precio: {order.price as unknown as string}</span>
+                </div>
+                <div className="flex flex-col flex-grow justify-end pl-4 pr-20 w-1/3">
+                  <Link href="#" className="text-[#F7511E]">Ver más</Link>
                 </div>
               </div>
             ))}
