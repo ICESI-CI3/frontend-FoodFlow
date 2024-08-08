@@ -10,14 +10,14 @@ import { Footer } from "@/app/components/footer/footer";
 export default function Component() {
   return (
     <ProtectedRoute role="administrador">
+      <Header />
       <main className="h-screen">
-        <Header />
         <div className="flex flex-col h-full bg-white pl-20 pr-20">
           <GridView />
         </div>
-        <Footer />
       </main>
-      
+      <Footer />
+
     </ProtectedRoute>
   );
 }

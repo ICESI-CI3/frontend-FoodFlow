@@ -8,12 +8,12 @@ import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBp6MaVedy660xU-AL6M2M4OzYXO9n2ocQ",
-  authDomain: "restaurant-app-73425.firebaseapp.com",
-  projectId: "restaurant-app-73425",
-  storageBucket: "restaurant-app-73425.appspot.com",
-  messagingSenderId: "1068200017759",
-  appId: "1:1068200017759:web:4f07bc4472dc27498c80ea"
+  apiKey: "AIzaSyCx5ABpDysjpibxvOq3t4n5eHcRixIRVl8",
+  authDomain: "restaurante-3ac50.firebaseapp.com",
+  projectId: "restaurante-3ac50",
+  storageBucket: "restaurante-3ac50.appspot.com",
+  messagingSenderId: "5477948920",
+  appId: "1:5477948920:web:d3da567d84dc9a06dd8a0d"
 };
 
 // Initialize Firebase

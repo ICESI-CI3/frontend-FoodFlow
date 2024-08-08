@@ -53,7 +53,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     getUsers();
   }, []);
 
-  const register = async (user: User) => {
+  const register = async (user: User) => {    
     try {
       const userExists = users.some((i) => i.email === user.email);
 
@@ -88,7 +88,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
   const login = async (user: any) => {
     try {
-      const userExists = users.some((i) => i.email != user.email);
+      const userExists = users.some((i) => i.email == user.email);
 
       if (userExists) {
         const { email, password } = user;

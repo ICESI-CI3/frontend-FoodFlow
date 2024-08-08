@@ -9,7 +9,7 @@ export const GridView = () => {
   const { searchTerm, setSearchTerm, filteredProducts, handleButtonMore } = useForm();
 
   return (
-    <section className="w-full h-5000 py-12">
+    <section className="w-full h-screen py-12">
       <div className="container px-4 md:px-6">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl text-gray-800 font-bold tracking-tight">Productos</h2>
@@ -32,21 +32,23 @@ export const GridView = () => {
         ) : (
           <div className="grid gap-6 md:gap-8 mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {filteredProducts.map((product) => (
-              <div key={product.id} className="rounded-lg overflow-hidden dark:bg-white shadow-xl">
-                <img
-                  src={product.image || "/placeholder.svg"}
-                  alt={product.name}
-                  width={300}
-                  height={200}
-                  className="object-cover rounded-lg overflow-hidden w-full aspect-[3/2]"
-                />
-                <div className="p-4 flex flex-col gap-2">
+              <div key={product.id} className="flex flex-col rounded-lg overflow-hidden dark:bg-white h-auto shadow-2xl">
+                <div className="w-full h-40">
+                  <img
+                    src={product.image || "/placeholder.svg"}
+                    alt={product.name}
+                    width={300}
+                    height={200}
+                    className="object-cover rounded-t-lg overflow-hidden w-full h-full"
+                  />
+                </div>
+                <div className="p-4 flex flex-col justify-center h-36 gap-2">
                   <h3 className="font-semibold text-lg text-[#F7511E]">Nombre: {product.name}</h3>
                   <div className="text-sm font-semibold text-gray-700">Precio: {product.price}</div>
                   <div className="text-sm font-semibold text-gray-700">Categoría: {product.category}</div>
                 </div>
-                <div>
-                  <Button className="bg-[#F7511E] shadow-lg" onClick={handleButtonMore}>
+                <div className="h-auto rounded-none">
+                  <Button className="rounded-none bg-[#F7511E] h-full" onClick={handleButtonMore}>
                     Ver más
                   </Button>
                 </div>

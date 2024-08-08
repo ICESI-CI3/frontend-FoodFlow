@@ -32,21 +32,23 @@ export const GridView = () => {
         ) : (
           <div className="grid gap-6 md:gap-8 mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {filteredIngredients.map((ingredient) => (
-              <div key={ingredient.id} className="rounded-lg overflow-hidden dark:bg-white shadow-xl">
-                <img
-                  src={ingredient.image || "/placeholder.svg"}
-                  alt={ingredient.name}
-                  width={300}
-                  height={200}
-                  className="object-cover rounded-lg overflow-hidden w-full aspect-[3/2]"
-                />
-                <div className="p-4 flex flex-col gap-2">
+              <div key={ingredient.id} className="flex flex-col rounded-lg overflow-hidden dark:bg-white h-auto shadow-2xl">
+                <div className="w-full h-40">
+                  <img
+                    src={ingredient.image || "/placeholder.svg"}
+                    alt={ingredient.name}
+                    width={300}
+                    height={300}
+                    className="object-cover rounded-t-lg overflow-hidden w-full h-full"
+                  />
+                </div>
+                <div className="p-4 flex flex-col justify-center h-36 gap-2">
                   <h3 className="font-semibold text-lg text-[#F7511E]">Nombre: {ingredient.name}</h3>
                   <div className="text-sm font-semibold text-gray-700">Cantidad: {ingredient.quantity}</div>
                   <div className="text-sm font-semibold text-gray-700">Categoría: {ingredient.category}</div>
                 </div>
-                <div>
-                  <Button className="bg-[#F7511E] shadow-lg" onClick={handleButtonMore}>
+                <div className="h-auto rounded-none">
+                  <Button className="rounded-none bg-[#F7511E] h-full" onClick={handleButtonMore}>
                     Ver más
                   </Button>
                 </div>

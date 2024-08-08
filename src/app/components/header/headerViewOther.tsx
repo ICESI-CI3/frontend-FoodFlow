@@ -5,9 +5,12 @@ import { useForm } from "@/app/auth/hooks/useGeneralAuth";
 import Link from "next/link";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem } from "../dropdownmenu/dropdownmenu";
 import { Button } from "../button/button";
+import { usePathname } from "next/navigation";
 
 export const HeaderOther = () => {
   const { handleSubmitLogout } = useForm();
+
+  const path = usePathname()
 
   return (
     <header className="bg-gray-100 dark:bg-gray-800 px-6 py-4 flex items-center justify-between">
